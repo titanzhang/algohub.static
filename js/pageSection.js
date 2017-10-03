@@ -36,6 +36,9 @@ ahjs.EditFormModule.init = function() {
 
 ahjs.EditFormModule.saveResult = function(saveUrl, formObj, modObj, editorObj) {
 	var callback = function() {
+		ahjs.trigger('Dialog.setTitle', 'Save Algorithm');
+		ahjs.trigger('Dialog.setContent', 'Processing ...');
+		ahjs.trigger('Dialog.show');
 		modObj.val(editorObj.value());
 		$.post(saveUrl, formObj.serialize(), function(data) {
 			ahjs.trigger('AlgoEdit.saveResponse', data);
@@ -46,7 +49,14 @@ ahjs.EditFormModule.saveResult = function(saveUrl, formObj, modObj, editorObj) {
 
 ahjs.EditFormModule.saveResponse = function() {
 	var callback = function(data) {
-		console.log(data);
+		if (data.status) {
+			// Success
+			var content = 'Algorithm saved! See your algorithm <a href="' + data.result.link + '">here</a>';
+			ahjs.trigger('Dialog.setContent', content);
+		} else {
+			ahjs.trigger('Dialog.setContent', 'Whoops! Something is going wrong.');
+		}
+		ahjs.trigger('Dialog.show');
 	};
 	return callback;
 };
