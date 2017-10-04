@@ -42,6 +42,9 @@ ahjs.EditFormModule.saveResult = function(saveUrl, formObj, nameObj) {
 				ahjs.trigger('AlgoEdit.error', 'Algorightm name cannot be empty!');
 				return;
 			}
+			ahjs.trigger('Dialog.setTitle', 'Save Algorithm');
+			ahjs.trigger('Dialog.setContent', 'Processing ...');
+			ahjs.trigger('Dialog.show');
 		}
 
 		$.post(saveUrl, formObj.serialize(), function(data) {
@@ -53,7 +56,15 @@ ahjs.EditFormModule.saveResult = function(saveUrl, formObj, nameObj) {
 
 ahjs.EditFormModule.saveResponse = function() {
 	var callback = function(data) {
-		console.log(data);
+		if (data.status) {
+			// Success
+			var content = '<h4>Algorithm saved!</h4>See your algorithm <a href="' + data.result.link + '">here</a>';
+			ahjs.trigger('Dialog.setContent', content);
+		} else {
+			ahjs.trigger('Dialog.setContent', 'Whoops! Something is going wrong');
+			console.log(data.message || 'save failed');
+		}
+		ahjs.trigger('Dialog.show');
 	};
 	return callback;
 };
