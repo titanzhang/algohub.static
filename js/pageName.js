@@ -30,7 +30,9 @@ ahjs.EditFormModule.init = function() {
 
 ahjs.EditFormModule.showError = function() {
 	var callback = function(error) {
-		alert(error);
+		ahjs.trigger('Dialog.setTitle', 'Error');
+		ahjs.trigger('Dialog.setContent', error);
+		ahjs.trigger('Dialog.show2');
 	};
 	return callback;
 };

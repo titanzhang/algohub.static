@@ -19,14 +19,19 @@ ahjs.DialogModule.init = function() {
 	var contentObj = $('#' + config.contentID);
 
 	ahjs.on('Dialog.show', this.onShowHide(dialogObj, true));
+	ahjs.on('Dialog.show2', this.onShowHide(dialogObj, true, true));
 	ahjs.on('Dialog.hide', this.onShowHide(dialogObj, false));
 	ahjs.on('Dialog.setTitle', this.onSetTitle(titleObj));
 	ahjs.on('Dialog.setContent', this.onSetContent(contentObj));
 };
 
-ahjs.DialogModule.onShowHide = function(dialogObj, isShow) {
+ahjs.DialogModule.onShowHide = function(dialogObj, isShow, easyClose) {
 	var callback = function() {
-		dialogObj.modal({backdrop: 'static', keyboard: false, show: isShow? 'show': 'hide'});
+		if (easyClose) {
+			dialogObj.modal({show: isShow? 'show': 'hide'});
+		} else {
+			dialogObj.modal({backdrop: 'static', keyboard: false, show: isShow? 'show': 'hide'});
+		}
 	};
 	return callback;
 };
