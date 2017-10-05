@@ -51,7 +51,7 @@ ahjs.EditFormModule.saveResponse = function() {
 	var callback = function(data) {
 		if (data.status) {
 			// Success
-			var content = '<h4>Algorithm saved!</h4>See your algorithm <a href="' + data.result.link + '">here</a>';
+			var content = '<h4>Algorithm saved!</h4>See your algorithm <a href="' + data.result.link + '">HERE</a><br/>(There might be several minutes\' delay to see your change)';
 			ahjs.trigger('Dialog.setContent', content);
 		} else {
 			ahjs.trigger('Dialog.setContent', 'Whoops! Something is going wrong.');
