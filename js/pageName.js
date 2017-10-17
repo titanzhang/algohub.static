@@ -24,6 +24,7 @@ ahjs.EditFormModule.init = function() {
 	ahjs.on('AlgoEdit.submit', this.onStep(formObj, nameObj, tagsObj, baseUrl));
 	ahjs.on('AlgoEdit.save', this.saveResult(saveUrl, formObj, nameObj));
 	ahjs.on('AlgoEdit.saveResponse', this.saveResponse());
+	ahjs.on('Tags.changed', this.onTagsChanged(tagsObj));
 	$("[ahlink='edit']").click(this.onClickSubmit());
 	$('#' + config.finishId).click(this.onClickFinish());
 };
@@ -107,6 +108,13 @@ ahjs.EditFormModule.onStep = function(formObj, nameObj, tagsObj, baseUrl) {
 	};
 	return callback;
 };
+
+ahjs.EditFormModule.onTagsChanged = function(tagsObj) {
+	var callback = function(tagList) {
+		tagsObj.val(tagList.join(','));
+	};
+	return callback;
+}
 
 ahjs.EditFormModule.init();
 

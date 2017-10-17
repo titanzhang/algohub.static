@@ -22,6 +22,47 @@ p {
     margin: 0 0 20px;
 }
 
+.tag {
+  font-size: 100%;
+  font-weight: 400;
+  padding: 0.3em 0.4em 0.3em;
+  margin: 2px 1px !important;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.tag > span {
+  display: inline-block;
+  max-width: 94%;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.tag a {
+  display: inline-block;
+  color: #bbb;
+  cursor: pointer;
+  opacity: 0.6;
+  margin: 0 0 0 0.3em;
+}
+
+.tag a:hover {
+  opacity: 1.0;
+}
+
+.tag a .glyphicon-white {
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.tag .remove {
+  vertical-align: bottom;
+  top: 0;
+}
+
 /* Code highlight github theme */
 .highlight .hll { background-color: #ffffcc }
 .highlight .c { color: #999988; font-style: italic } /* Comment */
