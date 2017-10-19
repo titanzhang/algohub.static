@@ -24,13 +24,13 @@ ahjs.on = function(eventName, callBack) {
 	this.eventList[eventName].push(callBack);
 }
 
-ahjs.trigger = function(eventName, params) {
+ahjs.trigger = function(eventName, ...params) {
 	if (this.eventList[eventName] === undefined) {
 		return;
 	}
 	var i;
 	for (i in this.eventList[eventName]) {
 		var callBack = this.eventList[eventName][i];
-		setTimeout(callBack, 0, params);
+		setTimeout(callBack, 0, ...params);
 	}
 }
