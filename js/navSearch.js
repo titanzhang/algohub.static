@@ -36,7 +36,7 @@ ahjs.NavSearchModule.init = function() {
 	var baseUrl = config.baseUrl;
 
 	ahjs.on('NavSearch.renderTagList', this.onRenderTagList(tagListObj, tagTemplate, tagObj));
-	ahjs.on('NavSearch.search', this.onSearch(searchUrl, baseUrl, linkTemplate));
+	ahjs.on('NavSearch.search', this.onSearch(searchUrl, linkTemplate));
 	ahjs.on('NavSearch.showResult', this.onShowResult(resultObj, contentObj));
 	ahjs.on('NavSearch.hideResult', this.onHideResult(resultObj));
 	formObj.submit(this.onFormSubmit(tagObj, titleObj));
@@ -95,12 +95,12 @@ ahjs.NavSearchModule.onFormSubmit = function(tagObj, titleObj) {
 	return callback;
 };
 
-ahjs.NavSearchModule.onSearch = function(searchUrl, baseUrl, linkTemplate) {
+ahjs.NavSearchModule.onSearch = function(searchUrl, linkTemplate) {
 	var self = this;
 	var callback = function(tag, title) {
 		ahjs.trigger('NavSearch.showResult', 'Searching ...');
 		var url = searchUrl + '?q=' + encodeURIComponent(title || '') + '&tag=' + encodeURIComponent(tag || '');
-		$.get(url, self.onSearchReturn(searchUrl, baseUrl, linkTemplate)).fail(function() {
+		$.get(url, self.onSearchReturn(searchUrl, linkTemplate)).fail(function() {
 			ahjs.trigger('NavSearch.showResult', 'Failed!');
 			ahjs.trigger('NavSearch.hideResult', 5000);			
 		});	
@@ -108,13 +108,13 @@ ahjs.NavSearchModule.onSearch = function(searchUrl, baseUrl, linkTemplate) {
 	return callback;
 };
 
-ahjs.NavSearchModule.onSearchReturn = function(searchUrl, baseUrl, linkTemplate) {
+ahjs.NavSearchModule.onSearchReturn = function(searchUrl, linkTemplate) {
 	var callback = function(data, status) {
 		if (status === 'success' && data.status) {
 			var html = '';
 			for (var i in data.result.pages) {
 				var page = data.result.pages[i];
-				html += linkTemplate.replace('{URL}', baseUrl + page.url).replace('{TITLE}', page.title);
+				html += linkTemplate.replace('{URL}', page.url).replace('{TITLE}', page.title);
 			}
 			ahjs.trigger('NavSearch.showResult', html || 'No algorithm found!');
 		} else {
