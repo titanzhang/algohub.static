@@ -60,7 +60,7 @@ ahjs.NavSearchModule.onRenderTagList = function(tagListObj, tagTemplate, tagObj)
 
 ahjs.NavSearchModule.buildTagList = function(tagUrl) {
 	try {
-		$.get(tagUrl, this.onGetTagsReturn());
+		$.get(tagUrl + '?v=' + new Date().getTime(), this.onGetTagsReturn());
 	} catch(e) {}
 };
 
@@ -99,7 +99,7 @@ ahjs.NavSearchModule.onSearch = function(searchUrl, linkTemplate) {
 	var self = this;
 	var callback = function(tag, title) {
 		ahjs.trigger('NavSearch.showResult', 'Searching ...');
-		var url = searchUrl + '?q=' + encodeURIComponent(title || '') + '&tag=' + encodeURIComponent(tag || '');
+		var url = searchUrl + '?q=' + encodeURIComponent(title || '') + '&tag=' + encodeURIComponent(tag || '') + '&v=' + new Date().getTime();
 		$.get(url, self.onSearchReturn(searchUrl, linkTemplate)).fail(function() {
 			ahjs.trigger('NavSearch.showResult', 'Failed!');
 			ahjs.trigger('NavSearch.hideResult', 5000);			
