@@ -31,6 +31,19 @@ p {
   max-width: 100%;
 }
 
+.input-group-addon .tag {
+  display: inline;
+}
+
+.input-group-tag .input-group-addon {
+  background-color: inherit;
+  border-right: 0;
+}
+
+.input-group-tag .form-control {
+  border-left: 0;
+}
+
 .tag > span {
   display: inline-block;
   max-width: 94%;
@@ -61,6 +74,10 @@ p {
 .tag .remove {
   vertical-align: bottom;
   top: 0;
+}
+
+.dropdown-menu .input-group {
+  padding: 0 5px;
 }
 
 /* Code highlight github theme */

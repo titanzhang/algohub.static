@@ -1,5 +1,7 @@
 // var tagsConfig = {
 //   containerID: "ahTags",
+//   cTagID: "ahCustomizedTag",
+//	 cTagBtID: "ahCustTagBt",
 //   templateID: "ahTagsTemplate",
 //   list: ['test tag1', 'test tag2', 'test tag3'],
 // };
@@ -17,11 +19,15 @@ ahjs.TagsModule.init = function() {
 
 	var container = $('#' + config.containerID);
 	var template = $('#' + config.templateID).html();
+	var cTagInput = config.cTagID? $('#' + config.cTagID): null;
+	var cTagButton = config.cTagBtID? $('#' + config.cTagBtID): null;
 	this.tagList = config.list.trim().length === 0? []: config.list.split(',');
 
 	ahjs.on('Tags.build', this.onBuildTags(container, template));
 	ahjs.on('Tags.add', this.onAddTag());
 	$("[ahlink='addtag']").click(this.onClickAddTag());
+	if (cTagButton) cTagButton.click(this.onClickCustTag(cTagInput));
+	if (cTagInput) cTagInput.keypress(this.onKeyCustInput(cTagButton));
 
 	ahjs.trigger('Tags.build');
 };
@@ -30,6 +36,25 @@ ahjs.TagsModule.onClickAddTag = function() {
 	var callback = function(event) {
 		var tag = event.currentTarget.attributes['ahdata'].value;
 		ahjs.trigger('Tags.add', tag);
+	};
+	return callback;
+};
+
+ahjs.TagsModule.onKeyCustInput = function(cTagButton) {
+	var callback = function(event) {
+		if (event.which == '13') {
+			cTagButton.click();
+		}
+	};
+	return callback;
+};
+
+ahjs.TagsModule.onClickCustTag = function(cTagInput) {
+	var callback = function(event) {
+		var tag = cTagInput.val().replace(/[^A-Za-z0-9_ ]/g, '').trim();
+		if (tag.length !== 0) {
+			ahjs.trigger('Tags.add', tag);
+		}
 	};
 	return callback;
 };
