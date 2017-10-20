@@ -22,7 +22,7 @@ ahjs.EditFormModule.init = function() {
 
 	ahjs.on('AlgoEdit.error', this.showError());
 	ahjs.on('AlgoEdit.submit', this.onStep(formObj, nameObj, tagsObj, baseUrl));
-	ahjs.on('AlgoEdit.save', this.saveResult(saveUrl, formObj, nameObj));
+	ahjs.on('AlgoEdit.save', this.saveResult(saveUrl, formObj, nameObj,tagsObj));
 	ahjs.on('AlgoEdit.saveResponse', this.saveResponse());
 	ahjs.on('Tags.changed', this.onTagsChanged(tagsObj));
 	$("[ahlink='edit']").click(this.onClickSubmit());
@@ -38,11 +38,15 @@ ahjs.EditFormModule.showError = function() {
 	return callback;
 };
 
-ahjs.EditFormModule.saveResult = function(saveUrl, formObj, nameObj) {
+ahjs.EditFormModule.saveResult = function(saveUrl, formObj, nameObj, tagsObj) {
 	var callback = function() {
 		if (nameObj !== null) {
 			if (nameObj.val().trim().length === 0) {
 				ahjs.trigger('AlgoEdit.error', 'Algorightm name cannot be empty!');
+				return;
+			}
+			if (tagsObj.val().trim().length === 0) {
+				ahjs.trigger('AlgoEdit.error', 'Tags cannot be empty!');
 				return;
 			}
 			ahjs.trigger('Dialog.setTitle', 'Save Algorithm');
